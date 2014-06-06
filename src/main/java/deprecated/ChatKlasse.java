@@ -1,4 +1,4 @@
-package io.lukas;
+package deprecated;
 
 import io.net.Server;
 import io.net.listeners.MessageListener;

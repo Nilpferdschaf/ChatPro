@@ -1,6 +1,6 @@
 package main;
 
-import io.lukas.ChatKlasse;
+import io.ChatKlasse;
 import io.net.Server;
 import io.net.events.MessageEvent;
 import io.net.events.StatusChangeEvent;
@@ -30,7 +30,7 @@ public class ClientController {
      */
     public ClientController() {
         ui = new ChatFrame();
-        server = new ChatKlasse();
+        server = new ChatKlasse("8.8.8.8", 80, 80);
         
         ui.addConnectionListener(new ConnectionListener() {
             

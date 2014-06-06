@@ -1,4 +1,4 @@
-package io.lukas;
+package deprecated;
 
 import java.net.*;
 import java.io.*;
