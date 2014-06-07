@@ -50,7 +50,7 @@ public class Transmitter extends Thread {
         boolean connected = false;
         while (!connected) {
             try {
-                System.out.println("Connecting");
+                notifyStatusListeners("Connecting");
                 socket = new Socket(ip, portOut);
                 connected = true;
             } catch (UnknownHostException e) {

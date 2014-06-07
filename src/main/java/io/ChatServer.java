@@ -1,6 +1,11 @@
 package io;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import io.net.Server;
+import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
 
@@ -14,6 +19,7 @@ public class ChatServer implements Server {
     
     private Receiver receiver;
     private Transmitter transmitter;
+    private List<StatusListener> statusListeners;
     
     /**
      * Kreiert einen neuen ChatServer
@@ -21,12 +27,29 @@ public class ChatServer implements Server {
     public ChatServer() {
         receiver = new Receiver();
         transmitter = new Transmitter();
+        statusListeners = new ArrayList<StatusListener>();
     }
     
     @Override
     public void addStatusListener(StatusListener listener) {
-        receiver.addStatusListener(listener);
-        transmitter.addStatusListener(listener);
+        
+        statusListeners.add(listener);
+        
+        StatusListener combinedStatus = new StatusListener() {
+            @Override
+            public void statusChanged(StatusChangeEvent evt) {
+                notifyStatusListeners(evt.getStatus());
+            }
+        };
+        receiver.addStatusListener(combinedStatus);
+        transmitter.addStatusListener(combinedStatus);
+    }
+    
+    private void notifyStatusListeners(String status) {
+        for (Iterator<StatusListener> i = statusListeners.iterator(); i.hasNext();) {
+            StatusListener listener = (StatusListener) i.next();
+            listener.statusChanged(new StatusChangeEvent(status));
+        }
     }
     
     @Override
