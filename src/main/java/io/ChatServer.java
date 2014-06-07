@@ -66,7 +66,6 @@ public class ChatServer implements Server {
     @Override
     public void connect(String ip, int portIn, int portOut) {
         receiver.listen(portIn);
-        System.out.println("send");
         transmitter.connect(ip, portOut);
     }
     

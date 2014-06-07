@@ -148,38 +148,41 @@ public class ChatFrame extends JFrame implements ChatGui {
         JPanel panel1 = new JPanel();
         GroupLayout glContentPane = new GroupLayout(contentPane);
         glContentPane.setHorizontalGroup(
-            glContentPane.createParallelGroup(Alignment.LEADING)
-                .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
-        );
+                glContentPane.createParallelGroup(Alignment.LEADING)
+                        .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                );
         glContentPane.setVerticalGroup(
-            glContentPane.createParallelGroup(Alignment.LEADING)
-                .addGroup(glContentPane.createSequentialGroup()
-                    .addComponent(panel, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel1, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
-        );
+                glContentPane.createParallelGroup(Alignment.LEADING)
+                        .addGroup(glContentPane.createSequentialGroup()
+                                .addComponent(panel, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(panel1, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
+                );
         GroupLayout glPanel1 = new GroupLayout(panel1);
         glPanel1.setHorizontalGroup(
-            glPanel1.createParallelGroup(Alignment.TRAILING)
-                .addGroup(glPanel1.createSequentialGroup()
-                    .addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(submitText, GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(btnSubmit))
-                .addComponent(scrollPane, Alignment.LEADING)
-        );
+                glPanel1.createParallelGroup(Alignment.TRAILING)
+                        .addGroup(glPanel1.createSequentialGroup()
+                                .addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.
+                                        DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(submitText, GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(btnSubmit))
+                        .addComponent(scrollPane, Alignment.LEADING)
+                );
         glPanel1.setVerticalGroup(
-            glPanel1.createParallelGroup(Alignment.TRAILING)
-                .addGroup(glPanel1.createSequentialGroup()
-                    .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(glPanel1.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(btnSubmit)
-                        .addComponent(submitText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        );
+                glPanel1.createParallelGroup(Alignment.TRAILING)
+                        .addGroup(glPanel1.createSequentialGroup()
+                                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(glPanel1.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(btnSubmit)
+                                        .addComponent(submitText, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameText, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                );
         
         statusText = new JTextField();
         statusText.setEditable(false);
@@ -187,52 +190,59 @@ public class ChatFrame extends JFrame implements ChatGui {
         
         GroupLayout glPanel = new GroupLayout(panel);
         glPanel.setHorizontalGroup(
-            glPanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(glPanel.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(glPanel.createParallelGroup(Alignment.LEADING)
+                glPanel.createParallelGroup(Alignment.LEADING)
                         .addGroup(glPanel.createSequentialGroup()
-                            .addComponent(lblIp)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(ipText, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblPort)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(portInText, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblPortOut)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(portOutText, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-                            .addGap(96))
-                        .addGroup(glPanel.createSequentialGroup()
-                            .addComponent(lblStatus)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(statusText, GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)))
-                    .addContainerGap())
-                .addGroup(Alignment.TRAILING, glPanel.createSequentialGroup()
-                    .addContainerGap(644, Short.MAX_VALUE)
-                    .addComponent(btnConnect))
-        );
+                                .addContainerGap()
+                                .addGroup(glPanel.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(glPanel.createSequentialGroup()
+                                                .addComponent(lblIp)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(ipText, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(lblPort)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(portInText, GroupLayout.PREFERRED_SIZE,
+                                                        111, GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(lblPortOut)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(portOutText, GroupLayout.PREFERRED_SIZE,
+                                                        114, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(96))
+                                        .addGroup(glPanel.createSequentialGroup()
+                                                .addComponent(lblStatus)
+                                                .addPreferredGap(ComponentPlacement.RELATED)
+                                                .addComponent(statusText, GroupLayout.DEFAULT_SIZE,
+                                                        679, Short.MAX_VALUE)))
+                                .addContainerGap())
+                        .addGroup(Alignment.TRAILING, glPanel.createSequentialGroup()
+                                .addContainerGap(644, Short.MAX_VALUE)
+                                .addComponent(btnConnect))
+                );
         glPanel.setVerticalGroup(
-            glPanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(glPanel.createSequentialGroup()
-                    .addGroup(glPanel.createParallelGroup(Alignment.LEADING)
-                        .addGroup(glPanel.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(btnConnect)
-                            .addComponent(lblPortOut)
-                            .addComponent(portInText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPort)
-                            .addComponent(ipText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(portOutText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                glPanel.createParallelGroup(Alignment.LEADING)
                         .addGroup(glPanel.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblIp)))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(glPanel.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(statusText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblStatus))
-                    .addContainerGap(11, Short.MAX_VALUE))
-        );
+                                .addGroup(glPanel.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(glPanel.createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(btnConnect)
+                                                .addComponent(lblPortOut)
+                                                .addComponent(portInText, GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblPort)
+                                                .addComponent(ipText, GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(portOutText, GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(glPanel.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(lblIp)))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(glPanel.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(statusText, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblStatus))
+                                .addContainerGap(11, Short.MAX_VALUE))
+                );
         
         panel.setLayout(glPanel);
         panel1.setLayout(glPanel1);

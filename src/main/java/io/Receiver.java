@@ -5,10 +5,9 @@ import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -58,12 +57,10 @@ public class Receiver extends Thread {
                 notifyStatusListeners("Connection Established!");
                 
                 InputStream inStream = socket.getInputStream();
-                InputStreamReader sr = new InputStreamReader(inStream);
-                BufferedReader br = new BufferedReader(sr);
+                DataInputStream sr = new DataInputStream(inStream);
                 
-                String newline;
-                while ((newline = br.readLine()) != null) {
-                    notifyMessageListeners(newline);
+                while (true) {
+                    notifyMessageListeners(sr.readUTF());
                 }
             }
         } catch (IOException e) {
