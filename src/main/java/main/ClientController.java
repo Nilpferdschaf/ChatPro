@@ -1,6 +1,8 @@
 package main;
 
-import io.ChatKlasse;
+import javax.swing.JFrame;
+
+import io.ChatServer;
 import io.net.Server;
 import io.net.events.MessageEvent;
 import io.net.events.StatusChangeEvent;
@@ -30,7 +32,7 @@ public class ClientController {
      */
     public ClientController() {
         ui = new ChatFrame();
-        server = new ChatKlasse("8.8.8.8", 80, 80);
+        server = new ChatServer();
         
         ui.addConnectionListener(new ConnectionListener() {
             
@@ -66,6 +68,14 @@ public class ClientController {
                 ui.printMessage(evt.getMessage());
             }
             
+        });
+        
+        ((JFrame) ui).addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+//                server.disconnect();
+                System.exit(0);
+            }
         });
     }
 }
