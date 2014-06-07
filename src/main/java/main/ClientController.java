@@ -73,7 +73,7 @@ public class ClientController {
         ((JFrame) ui).addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-//                server.disconnect();
+                server.disconnect();
                 System.exit(0);
             }
         });

@@ -3,10 +3,9 @@ package io;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.StatusListener;
 
-import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -74,12 +73,8 @@ public class Transmitter extends Thread {
     public boolean send(String message) {
         try {
             OutputStream outStream = socket.getOutputStream();
-            OutputStreamWriter ow = new OutputStreamWriter(outStream);
-            BufferedWriter bw = new BufferedWriter(ow);
-            
-            bw.write(message);
-            bw.write("\n");
-            bw.flush();
+            DataOutputStream dos = new DataOutputStream(outStream);
+            dos.writeUTF(message);
             
         } catch (IOException e) {
             // TODO Auto-generated catch block
