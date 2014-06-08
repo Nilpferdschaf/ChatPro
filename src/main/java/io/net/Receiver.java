@@ -1,15 +1,12 @@
 package io.net;
 
 import io.net.events.Message;
-import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
-import io.net.listeners.StatusListener;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,12 +17,10 @@ import java.util.List;
  * @author nicklas-kulp
  * @version 1.0
  */
-public class Receiver extends Thread {
+public class Receiver extends ServerComponent {
     
-    private Socket socket;
     private int portIn;
     private List<MessageListener> messageListeners;
-    private List<StatusListener> statusListeners;
     
     /**
      * Kreiert einen neuen Receiver
@@ -33,7 +28,6 @@ public class Receiver extends Thread {
     public Receiver() {
         portIn = 5001;
         messageListeners = new ArrayList<MessageListener>();
-        statusListeners = new ArrayList<StatusListener>();
     }
     
     /**
@@ -85,35 +79,6 @@ public class Receiver extends Thread {
      */
     public void addMessageListener(MessageListener listener) {
         messageListeners.add(listener);
-    }
-    
-    private void notifyStatusListeners(ServerStatus status) {
-        for (Iterator<StatusListener> i = statusListeners.iterator(); i.hasNext();) {
-            StatusListener listener = (StatusListener) i.next();
-            listener.statusChanged(new StatusChangeEvent(status));
-        }
-    }
-    
-    /**
-     * Fuegt einen neuen StatusListener zu der Liste der Beobachter hinzu
-     * 
-     * @param listener Der hinzuzufuegende StatusListener
-     */
-    public void addStatusListener(StatusListener listener) {
-        statusListeners.add(listener);
-    }
-    
-    /**
-     * Schließt den Receiver und die verwendeten Ressourcen
-     */
-    public void close() {
-        try {
-            if (socket != null) {
-                socket.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     
     @Override

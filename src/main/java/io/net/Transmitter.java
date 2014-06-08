@@ -1,15 +1,10 @@
 package io.net;
 
 import io.net.events.Message;
-import io.net.events.StatusChangeEvent;
-import io.net.listeners.StatusListener;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Der Transmitter-Teil eines Chatservers
@@ -17,19 +12,11 @@ import java.util.List;
  * @author nicklas-kulp
  * 
  */
-public class Transmitter extends Thread {
+public class Transmitter extends ServerComponent {
     
     private ObjectOutputStream oos;
     private String ip;
     private int portOut;
-    private List<StatusListener> statusListeners;
-    
-    /**
-     * Kreiert einen neuen Transmitter
-     */
-    public Transmitter() {
-        statusListeners = new ArrayList<StatusListener>();
-    }
     
     /**
      * Startet den Thread und verbindet den transmitter mit der angegebenen IP
@@ -48,7 +35,8 @@ public class Transmitter extends Thread {
         boolean connected = false;
         while (!connected) {
             try {
-                oos = new ObjectOutputStream(new Socket(ip, portOut).getOutputStream());
+                socket = new Socket(ip, portOut);
+                oos = new ObjectOutputStream(socket.getOutputStream());
                 connected = true;
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -73,36 +61,6 @@ public class Transmitter extends Thread {
         }
         
         return false;
-    }
-    
-    private void notifyStatusListeners(ServerStatus status) {
-        for (Iterator<StatusListener> i = statusListeners.iterator(); i.hasNext();) {
-            StatusListener listener = (StatusListener) i.next();
-            listener.statusChanged(new StatusChangeEvent(status));
-        }
-    }
-    
-    /**
-     * Fuegt einen neuen StatusListener zu der Liste der Beobachter hinzu
-     * 
-     * @param listener Der hinzuzufuegende StatusListener
-     */
-    public void addStatusListener(StatusListener listener) {
-        statusListeners.add(listener);
-    }
-    
-    /**
-     * Schließt den Transmitter und alle zugehörigen Ressourcen
-     */
-    public void close() {
-        try {
-            if (oos != null) {
-                oos.close();
-                notifyStatusListeners(ServerStatus.DISCONNECTED);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     
     @Override
