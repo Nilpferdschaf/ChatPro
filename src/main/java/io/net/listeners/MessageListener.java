@@ -1,6 +1,6 @@
 package io.net.listeners;
 
-import io.net.events.MessageEvent;
+import io.net.events.Message;
 
 import java.util.EventListener;
 
@@ -19,5 +19,5 @@ public abstract class MessageListener implements EventListener {
      * 
      * @param evt Informationen ueber die Nachricht
      */
-    public abstract void messageReceived(MessageEvent evt);
+    public abstract void messageReceived(Message evt);
 }

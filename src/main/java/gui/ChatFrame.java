@@ -1,9 +1,10 @@
 package gui;
 
 import gui.events.ConnectEvent;
-import gui.events.SubmissionEvent;
 import gui.listeners.ConnectionListener;
-import gui.listeners.SubmitListener;
+import io.ChatMember;
+import io.net.events.Message;
+import io.net.listeners.MessageListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ import javax.swing.JScrollPane;
  * @author nicklas-kulp
  * @version 1.0
  */
-public class ChatFrame extends JFrame implements ChatGui {
+public class ChatFrame extends JFrame implements ChatGui, ChatMember {
     
     private static final long serialVersionUID = 4688472858038683926L;
     private JPanel contentPane;
@@ -44,11 +45,11 @@ public class ChatFrame extends JFrame implements ChatGui {
     private JTextField portInText;
     private JTextField statusText;
     private JTextField submitText;
-    private JTextArea textArea;
+    private JTextArea chatArea;
     private JLabel lblIp;
     private JLabel lblPort;
     
-    private List<SubmitListener> subListeners;
+    private List<MessageListener> messageListeners;
     private List<ConnectionListener> connectListeners;
     private JTextField portOutText;
     private JTextField nameText;
@@ -60,7 +61,7 @@ public class ChatFrame extends JFrame implements ChatGui {
         initComponents();
         layoutComponents();
         
-        subListeners = new ArrayList<SubmitListener>();
+        messageListeners = new ArrayList<MessageListener>();
         connectListeners = new ArrayList<ConnectionListener>();
         
         setVisible(true);
@@ -72,8 +73,8 @@ public class ChatFrame extends JFrame implements ChatGui {
     }
     
     @Override
-    public void addSubmitListener(SubmitListener listener) {
-        subListeners.add(listener);
+    public void addMessageListener(MessageListener listener) {
+        messageListeners.add(listener);
     }
     
     @Override
@@ -82,32 +83,40 @@ public class ChatFrame extends JFrame implements ChatGui {
     }
     
     @Override
-    public void printMessage(String message) {
-        textArea.setText(textArea.getText() + message + "\n");
+    public boolean forwardMessage(Message message) {
+        printMessage(message);
+        return true;
+    }
+    
+    private void printMessage(Message message) {
+        chatArea.setText(chatArea.getText()
+                + formatTime(message.getTime()) + " "
+                + message.getAuthor() + ": "
+                + message + "\n");
     }
     
     private void submit() {
         
         if (!submitText.getText().equals("")) {
             
-            String message = "(" + timeIn() + ") " + nameText.getText() + ": "
-                    + submitText.getText();
+            Message message =
+                    new Message(System.currentTimeMillis(), nameText.getText(), submitText.getText());
             printMessage(message);
-            notifySubmit(message);
+            notifyMessage(message);
             submitText.setText("");
         }
     }
     
-    private static String timeIn() {
-        String format = "HH:mm";
+    private static String formatTime(long time) {
+        String format = "(HH:mm)";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        return dateFormat.format(new Date(System.currentTimeMillis()));
+        return dateFormat.format(new Date(time));
     }
     
-    private void notifySubmit(String message) {
-        for (Iterator<SubmitListener> i = subListeners.iterator(); i.hasNext();) {
-            SubmitListener listener = (SubmitListener) i.next();
-            listener.submitPressed(new SubmissionEvent(message));
+    private void notifyMessage(Message message) {
+        for (Iterator<MessageListener> i = messageListeners.iterator(); i.hasNext();) {
+            MessageListener listener = (MessageListener) i.next();
+            listener.messageReceived(message);
         }
     }
     
@@ -283,11 +292,11 @@ public class ChatFrame extends JFrame implements ChatGui {
         nameText = new JTextField();
         nameText.setColumns(10);
         
-        textArea = new JTextArea();
-        textArea.setWrapStyleWord(true);
-        scrollPane.setViewportView(textArea);
-        textArea.setLineWrap(true);
-        textArea.setEditable(false);
+        chatArea = new JTextArea();
+        chatArea.setWrapStyleWord(true);
+        scrollPane.setViewportView(chatArea);
+        chatArea.setLineWrap(true);
+        chatArea.setEditable(false);
         
         lblIp = new JLabel("IP:");
         

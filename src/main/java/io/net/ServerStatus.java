@@ -1,4 +1,4 @@
-package io;
+package io.net;
 
 /**
  * Stellt verschiedene Serverstatus zur Verfuegung.
@@ -10,7 +10,7 @@ public enum ServerStatus {
     /**
      * Der Server wurde gerade initiiert
      */
-    STARTED("Starting server"),
+    STARTED("Waiting for connection data"),
     /**
      * Der Server beginnt sich mit einem externen Server zu verbinden
      */
@@ -18,12 +18,17 @@ public enum ServerStatus {
     /**
      * Der Server hoert nun einen Port ab
      */
-    LISTENING("Searching for external server"),
+    LISTENING("Waiting for external server"),
     /**
      * Der Server hat einen externen Server erreicht, aber diese konnte noch
      * keine Verbindung zu ihm aufbauen.
      */
-    SEND_ONLY("Reached external server"),
+    CAN_SEND("Reached external server"),
+    /**
+     * Ein externer Server hat diesen erreicht, aber es konnte noch keine
+     * Verbindung zu ihm aufgebaut werden.
+     */
+    CAN_RECEIVE("Receiving from external server"),
     /**
      * Der Server kann an einen externen Server Nachrichten senden und
      * Nachrichten von ihm empfangen
@@ -48,7 +53,7 @@ public enum ServerStatus {
     /**
      * @return Eine textuelle Beschreibung des Serverstatus
      */
-    String getStatusMessage() {
+    public String getStatusMessage() {
         return statusMessage;
     }
 }

@@ -1,5 +1,6 @@
-package io;
+package io.net;
 
+import io.net.events.Message;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.StatusListener;
 
@@ -49,7 +50,6 @@ public class Transmitter extends Thread {
         boolean connected = false;
         while (!connected) {
             try {
-                notifyStatusListeners("Connecting");
                 socket = new Socket(ip, portOut);
                 connected = true;
             } catch (UnknownHostException e) {
@@ -61,7 +61,7 @@ public class Transmitter extends Thread {
             }
         }
         
-        notifyStatusListeners("Ready to send messages");
+        notifyStatusListeners(ServerStatus.CAN_SEND);
     }
     
     /**
@@ -70,21 +70,22 @@ public class Transmitter extends Thread {
      * @param message Die zu sendende Nachricht
      * @return true, wenn erfolgreich gesendet werden konnte, false, wenn nicht
      */
-    public boolean send(String message) {
+    public boolean send(Message message) {
         try {
             OutputStream outStream = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(outStream);
-            dos.writeUTF(message);
+            dos.writeLong(message.getTime());
+            dos.writeUTF(message.getAuthor());
+            dos.writeUTF(message.getMessage());
             
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
         return false;
     }
     
-    private void notifyStatusListeners(String status) {
+    private void notifyStatusListeners(ServerStatus status) {
         for (Iterator<StatusListener> i = statusListeners.iterator(); i.hasNext();) {
             StatusListener listener = (StatusListener) i.next();
             listener.statusChanged(new StatusChangeEvent(status));
@@ -109,7 +110,6 @@ public class Transmitter extends Thread {
                 socket.close();
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -1,6 +1,5 @@
 package io.net;
 
-import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
 
 /**
@@ -20,22 +19,6 @@ public interface Server {
      * @param listener Der hinzuzufuegende StatusListener
      */
     void addStatusListener(StatusListener listener);
-    
-    /**
-     * Fuegt einen neuen MessageListener zu dem Server hinzu, der bei eingehenden
-     * Nachrichten benachrichtigt wird.
-     * 
-     * @param listener Der hinzuzufuegende MessageListener
-     */
-    void addMessageListener(MessageListener listener);
-    
-    /**
-     * Sendet die uebergebende Nachricht an den verbundenen Server
-     * 
-     * @param message Die zu sendende Nachricht
-     * @return true, wenn die Nachricht gesendet werden konnte, false, wenn nicht.
-     */
-    boolean sendMessage(String message);
     
     /**
      * Verbindet den Server mit dem Server an der angegebenen IP und Port

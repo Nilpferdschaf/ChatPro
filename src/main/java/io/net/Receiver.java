@@ -1,6 +1,6 @@
-package io;
+package io.net;
 
-import io.net.events.MessageEvent;
+import io.net.events.Message;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
@@ -49,29 +49,31 @@ public class Receiver extends Thread {
     private void listen() {
         
         try (ServerSocket serverSocket = new ServerSocket(portIn)) {
-            notifyStatusListeners("Starte Server");
             
             while (true) {
                 
+                notifyStatusListeners(ServerStatus.LISTENING);
                 socket = serverSocket.accept();
-                notifyStatusListeners("Connection Established!");
+                notifyStatusListeners(ServerStatus.CAN_RECEIVE);
                 
                 InputStream inStream = socket.getInputStream();
                 DataInputStream sr = new DataInputStream(inStream);
                 
                 while (true) {
-                    notifyMessageListeners(sr.readUTF());
+                    Message message =
+                            new Message(sr.readLong(), sr.readUTF(), sr.readUTF());
+                    notifyMessageListeners(message);
                 }
             }
         } catch (IOException e) {
-            notifyStatusListeners("Connection lost");
+            notifyStatusListeners(ServerStatus.DISCONNECTED);
         }
     }
     
-    private void notifyMessageListeners(String message) {
+    private void notifyMessageListeners(Message message) {
         for (Iterator<MessageListener> i = messageListeners.iterator(); i.hasNext();) {
             MessageListener listener = (MessageListener) i.next();
-            listener.messageReceived(new MessageEvent(message));
+            listener.messageReceived(message);
         }
     }
     
@@ -84,7 +86,7 @@ public class Receiver extends Thread {
         messageListeners.add(listener);
     }
     
-    private void notifyStatusListeners(String status) {
+    private void notifyStatusListeners(ServerStatus status) {
         for (Iterator<StatusListener> i = statusListeners.iterator(); i.hasNext();) {
             StatusListener listener = (StatusListener) i.next();
             listener.statusChanged(new StatusChangeEvent(status));
@@ -109,7 +111,6 @@ public class Receiver extends Thread {
                 socket.close();
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

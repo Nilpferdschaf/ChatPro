@@ -1,19 +1,13 @@
 package main;
 
-import javax.swing.JFrame;
-
-import io.ChatServer;
-import io.net.Server;
-import io.net.events.MessageEvent;
+import io.net.ChatServer;
+import io.net.events.Message;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
 import gui.ChatFrame;
-import gui.ChatGui;
 import gui.events.ConnectEvent;
-import gui.events.SubmissionEvent;
 import gui.listeners.ConnectionListener;
-import gui.listeners.SubmitListener;
 
 /**
  * Ein Controller, der Statusupdates zwischen einem Chat Server und dem GUI hin-
@@ -24,8 +18,8 @@ import gui.listeners.SubmitListener;
  */
 public class ClientController {
     
-    private ChatGui ui;
-    private Server server;
+    private ChatFrame ui;
+    private ChatServer server;
     
     /**
      * Erzeugt einen neuen ClientController
@@ -43,11 +37,12 @@ public class ClientController {
             
         });
         
-        ui.addSubmitListener(new SubmitListener() {
-            
+        ui.addMessageListener(new MessageListener() {
+
             @Override
-            public void submitPressed(SubmissionEvent e) {
-                server.sendMessage(e.getMessage());
+            public void messageReceived(Message evt) {
+                // TODO Auto-generated method stub
+                
             }
             
         });
@@ -56,7 +51,7 @@ public class ClientController {
             
             @Override
             public void statusChanged(StatusChangeEvent e) {
-                ui.setStatus(e.getStatus());
+                ui.setStatus(e.getStatus().getStatusMessage());
             }
             
         });
@@ -64,13 +59,13 @@ public class ClientController {
         server.addMessageListener(new MessageListener() {
             
             @Override
-            public void messageReceived(MessageEvent evt) {
-                ui.printMessage(evt.getMessage());
+            public void messageReceived(Message evt) {
+                ui.forwardMessage(evt);
             }
             
         });
         
-        ((JFrame) ui).addWindowListener(new java.awt.event.WindowAdapter() {
+        ui.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 server.disconnect();
