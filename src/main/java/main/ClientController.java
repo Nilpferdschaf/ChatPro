@@ -40,11 +40,9 @@ public class ClientController {
         ui.addMessageListener(new MessageListener() {
 
             @Override
-            public void messageReceived(Message evt) {
-                // TODO Auto-generated method stub
-                
+            public void transmitMassage(Message message) {
+                server.forwardMessage(message);
             }
-            
         });
         
         server.addStatusListener(new StatusListener() {
@@ -59,8 +57,8 @@ public class ClientController {
         server.addMessageListener(new MessageListener() {
             
             @Override
-            public void messageReceived(Message evt) {
-                ui.forwardMessage(evt);
+            public void transmitMassage(Message message) {
+                ui.forwardMessage(message);
             }
             
         });

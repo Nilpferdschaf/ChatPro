@@ -1,12 +1,16 @@
 package io.net.events;
 
+import java.io.Serializable;
+
 /**
  * Enthaelt Informationen über eine Nachricht, die ein User sende will
  * 
  * @author nicklas-kulp
  * @version 1.0
  */
-public class Message {
+public class Message implements Serializable {
+    
+    private static final long serialVersionUID = -3882988477894037325L;
     private long time;
     private String author;
     private String message;
@@ -19,6 +23,8 @@ public class Message {
      * @param message Die Nachricht, die der User senden will
      */
     public Message(long time, String author, String message) {
+        this.time = time;
+        this.author = author;
         this.message = message;
     }
     

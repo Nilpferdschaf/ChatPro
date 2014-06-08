@@ -116,7 +116,7 @@ public class ChatFrame extends JFrame implements ChatGui, ChatMember {
     private void notifyMessage(Message message) {
         for (Iterator<MessageListener> i = messageListeners.iterator(); i.hasNext();) {
             MessageListener listener = (MessageListener) i.next();
-            listener.messageReceived(message);
+            listener.transmitMassage(message);
         }
     }
     

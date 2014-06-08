@@ -4,11 +4,9 @@ import io.net.events.Message;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.StatusListener;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
  */
 public class Transmitter extends Thread {
     
-    private Socket socket;
+    private ObjectOutputStream oos;
     private String ip;
     private int portOut;
     private List<StatusListener> statusListeners;
@@ -50,11 +48,8 @@ public class Transmitter extends Thread {
         boolean connected = false;
         while (!connected) {
             try {
-                socket = new Socket(ip, portOut);
+                oos = new ObjectOutputStream(new Socket(ip, portOut).getOutputStream());
                 connected = true;
-            } catch (UnknownHostException e) {
-                System.out.println(e.getMessage());
-                connected = false;
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 connected = false;
@@ -72,14 +67,9 @@ public class Transmitter extends Thread {
      */
     public boolean send(Message message) {
         try {
-            OutputStream outStream = socket.getOutputStream();
-            DataOutputStream dos = new DataOutputStream(outStream);
-            dos.writeLong(message.getTime());
-            dos.writeUTF(message.getAuthor());
-            dos.writeUTF(message.getMessage());
-            
+            oos.writeObject(message);
         } catch (IOException e) {
-            e.printStackTrace();
+            notifyStatusListeners(ServerStatus.DISCONNECTED);
         }
         
         return false;
@@ -106,8 +96,9 @@ public class Transmitter extends Thread {
      */
     public void close() {
         try {
-            if (socket != null) {
-                socket.close();
+            if (oos != null) {
+                oos.close();
+                notifyStatusListeners(ServerStatus.DISCONNECTED);
             }
         } catch (IOException e) {
             e.printStackTrace();

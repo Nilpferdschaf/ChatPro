@@ -17,7 +17,7 @@ public abstract class MessageListener implements EventListener {
      * Diese Methode wird aufgerufen, wenn eine neue Nachricht beim Server
      * eingeht
      * 
-     * @param evt Informationen ueber die Nachricht
+     * @param message Informationen ueber die Nachricht
      */
-    public abstract void messageReceived(Message evt);
+    public abstract void transmitMassage(Message message);
 }

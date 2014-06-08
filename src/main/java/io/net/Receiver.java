@@ -5,9 +5,9 @@ import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -57,15 +57,16 @@ public class Receiver extends Thread {
                 notifyStatusListeners(ServerStatus.CAN_RECEIVE);
                 
                 InputStream inStream = socket.getInputStream();
-                DataInputStream sr = new DataInputStream(inStream);
+                ObjectInputStream ois = new ObjectInputStream(inStream);
                 
-                while (true) {
-                    Message message =
-                            new Message(sr.readLong(), sr.readUTF(), sr.readUTF());
+                Message message;
+                while ((message = (Message) ois.readObject()) != null) {
                     notifyMessageListeners(message);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             notifyStatusListeners(ServerStatus.DISCONNECTED);
         }
     }
@@ -73,7 +74,7 @@ public class Receiver extends Thread {
     private void notifyMessageListeners(Message message) {
         for (Iterator<MessageListener> i = messageListeners.iterator(); i.hasNext();) {
             MessageListener listener = (MessageListener) i.next();
-            listener.messageReceived(message);
+            listener.transmitMassage(message);
         }
     }
     
