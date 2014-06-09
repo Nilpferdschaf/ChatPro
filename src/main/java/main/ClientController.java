@@ -70,5 +70,7 @@ public class ClientController {
                 System.exit(0);
             }
         });
+        
+        ui.setVisible(true);
     }
 }

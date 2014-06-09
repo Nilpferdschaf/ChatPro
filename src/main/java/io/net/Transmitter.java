@@ -10,7 +10,7 @@ import java.net.Socket;
  * Der Transmitter-Teil eines Chatservers
  * 
  * @author nicklas-kulp
- * 
+ * @version 2.0
  */
 public class Transmitter extends ServerComponent {
     
@@ -39,7 +39,6 @@ public class Transmitter extends ServerComponent {
                 oos = new ObjectOutputStream(socket.getOutputStream());
                 connected = true;
             } catch (IOException e) {
-                System.out.println(e.getMessage());
                 connected = false;
             }
         }

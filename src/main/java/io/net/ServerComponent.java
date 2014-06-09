@@ -59,5 +59,7 @@ public class ServerComponent extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        notifyStatusListeners(ServerStatus.DISCONNECTED);
     }
 }

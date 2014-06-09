@@ -13,7 +13,7 @@ import io.net.listeners.StatusListener;
  * Ein Chatserver, zum Senden und empfangen von Nachrichten
  * 
  * @author nicklas-kulp
- * @version 1.0
+ * @version 2.0
  */
 public class ChatServer implements Server, ChatMember {
     

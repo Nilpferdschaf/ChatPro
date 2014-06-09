@@ -15,7 +15,7 @@ import java.util.List;
  * Der Receiver-Teil eines ChatServers
  * 
  * @author nicklas-kulp
- * @version 1.0
+ * @version 2.0
  */
 public class Receiver extends ServerComponent {
     
@@ -59,8 +59,6 @@ public class Receiver extends ServerComponent {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
             notifyStatusListeners(ServerStatus.DISCONNECTED);
         }
     }

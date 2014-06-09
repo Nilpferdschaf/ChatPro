@@ -32,8 +32,6 @@ public class ChatFrame extends JFrame implements ChatGui, ChatMember {
      */
     public ChatFrame() {
         initComponents();
-        
-        setVisible(true);
     }
     
     @Override
