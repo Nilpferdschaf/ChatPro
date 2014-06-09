@@ -1,6 +1,6 @@
 package io.net.listeners;
 
-import io.net.events.Message;
+import io.net.encryption.Message;
 
 import java.util.EventListener;
 

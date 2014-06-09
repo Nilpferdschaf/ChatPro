@@ -1,4 +1,4 @@
-package io.net.events;
+package io.net.encryption;
 
 import java.io.Serializable;
 

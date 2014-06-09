@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import io.net.events.Message;
+import io.net.encryption.Message;
 import io.net.listeners.MessageListener;
 
 import javax.swing.JPanel;

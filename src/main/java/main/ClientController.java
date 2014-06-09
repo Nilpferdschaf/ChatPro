@@ -1,7 +1,7 @@
 package main;
 
 import io.net.ChatServer;
-import io.net.events.Message;
+import io.net.encryption.Message;
 import io.net.events.StatusChangeEvent;
 import io.net.listeners.MessageListener;
 import io.net.listeners.StatusListener;

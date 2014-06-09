@@ -1,6 +1,6 @@
 package io.net;
 
-import io.net.events.Message;
+import io.net.encryption.Message;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

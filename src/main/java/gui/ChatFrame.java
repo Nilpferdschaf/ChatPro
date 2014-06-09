@@ -1,8 +1,8 @@
 package gui;
 
 import gui.listeners.ConnectionListener;
-import io.ChatMember;
-import io.net.events.Message;
+import io.net.ChatMember;
+import io.net.encryption.Message;
 import io.net.listeners.MessageListener;
 
 import javax.swing.GroupLayout;

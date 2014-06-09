@@ -1,6 +1,6 @@
-package io;
+package io.net;
 
-import io.net.events.Message;
+import io.net.encryption.Message;
 import io.net.listeners.MessageListener;
 
 /**
